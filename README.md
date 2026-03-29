@@ -50,8 +50,8 @@ my_app/
 
 ヘッダー検索パスとライブラリ検索パスをMakefile内で
 ```
--I../libs/libj/include
--L../libs/libj/lib
+-I../libs/libpcm8a/include
+-L../libs/libpcm8a/lib
 ```
 のように指定し、`-ldos -liocs -lpcm8a` でリンクできます。
 内部的にDOSコールとIOCSコールを使っているため、`-ldos -liocs`もリンクしてください。
