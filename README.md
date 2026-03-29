@@ -53,5 +53,4 @@ my_app/
 -I../libs/libpcm8a/include
 -L../libs/libpcm8a/lib
 ```
-のように指定し、`-ldos -liocs -lpcm8a` でリンクできます。
-内部的にDOSコールとIOCSコールを使っているため、`-ldos -liocs`もリンクしてください。
+のように指定し、`-lpcm8a` でリンクできます。
