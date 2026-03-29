@@ -53,4 +53,5 @@ my_app/
 -I../libs/libj/include
 -L../libs/libj/lib
 ```
-のように指定し、`-lpcm8a` でリンクできます。
+のように指定し、`-ldos -liocs -lpcm8a` でリンクできます。
+内部的にDOSコールとIOCSコールを使っているため、`-ldos -liocs`もリンクしてください。

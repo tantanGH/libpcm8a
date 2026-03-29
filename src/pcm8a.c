@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <x68k/iocs.h>
+#include <x68k/dos.h>
 #include "pcm8a.h"
 
 //
@@ -228,25 +229,27 @@ int32_t pcm8a_set_polyphonic_mode(int16_t mode) {
 //
 int32_t pcm8a_isavailable() {
 
-  uint8_t eye_catch_addr_bytes[4];
-  for (int16_t i = 0; i < 4; i++) {
-    eye_catch_addr_bytes[i] = _iocs_b_bpeek((uint8_t*)(0x0088 + i));
-  }
-  uint8_t* eye_catch_addr = *((uint8_t**)eye_catch_addr_bytes) - 16;
+  //uint8_t eye_catch_addr_bytes[4];
+  //for (int16_t i = 0; i < 4; i++) {
+  //  eye_catch_addr_bytes[i] = _iocs_b_bpeek((uint8_t*)(0x0088 + i));
+  //}
+  //uint8_t* eye_catch_addr = *((uint8_t**)eye_catch_addr_bytes) - 16;
+  
+  uint32_t eye_catch_addr = (uint32_t)_dos_intvcg(0x22) - 16; 
 
   uint8_t eye_catch1[5];
   for (int16_t i = 0; i < 5; i++) {
-    eye_catch1[i] = _iocs_b_bpeek(eye_catch_addr + i);
+    eye_catch1[i] = _iocs_b_bpeek((const void*)(eye_catch_addr + i));
   }
 
   uint8_t pcm8a_version[3];
   for (int16_t i = 0; i < 3; i++) {
-    pcm8a_version[i] = _iocs_b_bpeek(eye_catch_addr + i + 5);
+    pcm8a_version[i] = _iocs_b_bpeek((const void*)(eye_catch_addr + i + 5));
   }
 
   uint8_t eye_catch2[8];
   for (int16_t i = 0; i < 8; i++) {
-    eye_catch2[i] = _iocs_b_bpeek(eye_catch_addr + i + 8);
+    eye_catch2[i] = _iocs_b_bpeek((const void*)(eye_catch_addr + i + 8));
   }
 
   return (memcmp(eye_catch1, "PCM8A", 5) == 0 && memcmp(pcm8a_version, "100", 3) >= 0 && memcmp(eye_catch2, "PCM8/048", 8) == 0 ) ? 1 : 0;
