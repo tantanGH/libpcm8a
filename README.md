@@ -40,7 +40,7 @@ my_app/
 ├── .git/
 ├── .gitmodules
 ├── libs/
-│   └── libpcm8pp/
+│   └── libpcm8a/
 │       ├── include/pcm8a.h
 │       └── lib/libpcm8a.a
 └── src/
